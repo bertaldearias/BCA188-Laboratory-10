@@ -50,8 +50,8 @@ This demonstrates that ESP32 devices can discover nearby devices and exchange in
 The following files are included in this repository:
 
 1. `README.md` – Laboratory results and documentation.
-2. `serial-monitor.png` – Screenshot of the Serial Monitor showing the detected boards and MAC addresses.
-3. `serial-monitor-video.mp4` – 30-second screen recording of the Serial Monitor.
+2. `screenshotsandvideo` – Screenshot of the Serial Monitor showing the detected boards and MAC addresses and 30-second screen recording of the Serial Monitor.
+
 
 ---
 
