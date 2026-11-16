@@ -56,4 +56,6 @@ The output displayed:
 ## Evidence
 
 ![ESP-NOW Serial Monitor](esp-now-output.png)
-![ESP-NOW 30 sec. Video](https://drive.google.com/file/d/1tBmIH-OzIAHkDdx5yqaoJWx3OfcUGqB8/view?usp=sharing)
+[![ESP-NOW Block Network Video Demonstration](https://drive.google.com/thumbnail?id=1tBmIH-OzIAHkDdx5yqaoJWx3OfcUGqB8&sz=w1000)](https://drive.google.com/file/d/1tBmIH-OzIAHkDdx5yqaoJWx3OfcUGqB8/view?usp=sharing)
+
+**[▶ Watch Full Video Demonstration](https://drive.google.com/file/d/1tBmIH-OzIAHkDdx5yqaoJWx3OfcUGqB8/view?usp=sharing)**
