@@ -1,6 +1,6 @@
 # Laboratory 10 Submission
 
-* **Name:** gallarde_christine
+* **Name:** GALLARDE_CHRISTINE
 * **Board's MAC Address:** 30:30:F9:20:3D:04
 * **Number of Boards Heard:** 17
 * **Date and Time of Block Window:** November 16, 2026 | 4:00 PM - 4:30 PM
