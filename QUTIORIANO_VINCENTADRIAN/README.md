@@ -29,5 +29,8 @@
 
 ## Evidence Attached
 
-* **Serial Monitor Screenshot:** `[serial_monitor.png]`
-* **30-Second Screen Recording:** `[screen_record.mp4]`
+### Serial Monitor Screenshot
+![Serial Monitor Screenshot](./serial_monitor.png)
+
+### 30-Second Screen Recording
+[Watch 30-Second Screen Recording](./screen_record.mp4)
