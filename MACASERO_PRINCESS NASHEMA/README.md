@@ -36,8 +36,7 @@
 - **Date:** November 16, 2026
 - **Time:** 4:13 PM 
 
-### Evidence
+## Evidence
 
-- Serial Monitor Screenshot: `https://drive.google.com/file/d/1-0FUT5deNnK7-h08raYVgovNI_FZTm-U/view?usp=drive_link`
-- 30-Second Screen Recording: `https://drive.google.com/file/d/1tnQyvGYdEEs6dzJ5_fekOJ7DUvjv4BUf/view?usp=drive_link`
-
+- [Serial Monitor Screenshot](https://drive.google.com/file/d/1-0FUT5deNnK7-h08raYVgovNI_FZTm-U/view?usp=drive_link)
+- [30-Second Screen Recording](https://drive.google.com/file/d/1tnQyvGYdEEs6dzJ5_fekOJ7DUvjv4BUf/view?usp=drive_link)
