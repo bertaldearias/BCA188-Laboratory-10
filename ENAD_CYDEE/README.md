@@ -3,7 +3,7 @@
 ## Student Information
 
 - *Name:* ENAD
-- *My Board MAC Address:* 4C:C3:82:E6:1A:E8
+- *My Board MAC Address:* E0:8C:FE:5C:EA:40
 - *Number of Boards Heard:* 17
 - *Date:* November 16, 2026
 - *Block:* ESP-NOW BLOCK 2 NETWORK (B186.1)
