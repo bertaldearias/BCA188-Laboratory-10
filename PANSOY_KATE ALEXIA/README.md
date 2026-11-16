@@ -48,13 +48,3 @@ https://drive.google.com/file/d/1viimWoOK9hKjGGkjA6N9n_xlZT8aaTID/view?usp=drive
 Short video demonstrating the board running and detecting the other boards.
 
 https://drive.google.com/file/d/1TyRTGITFsjCH2i5efgcugJcQQ_rHYWez/view?usp=sharing
-
-
-## Notes
-
-- MAC addresses are listed exactly as recorded during the test.
-- Each name corresponds to the classmate/owner of that board.
-
-## Author
-
-**Pansoy, Kate Alexia**
