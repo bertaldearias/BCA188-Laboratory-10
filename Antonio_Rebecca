@@ -1,0 +1,40 @@
+<div align="center">
+
+# Laboratory 10  
+## ESP-NOW Block 2 Network
+
+**Student:** Antonio_Rebecca
+**Board MAC Address:** `20:50:0D:5A:28:6C`  
+**Number of Boards Heard:** 17  
+**Block Window:** November 16, 2026 | 4:07pm
+
+</div>
+
+## MAC Addresses Heard
+
+| No. | Name | MAC Address |
+|---:|---|---|
+| 1 | ARIAS | `BC:DD:C2:CB:EC:64` |
+| 2 | CANETE | `7C:D5:44:35:0F:90` |
+| 3 | COBRADO | `74:4D:BD:77:38:D0` |
+| 4 | ENAD | `E0:8C:FE:5C:EA:40` |
+| 5 | ESPTORES | `E0:72:A1:DA:1E:94` |
+| 6 | GALLARDE | `30:30:F9:20:3D:04` |
+| 7 | HAYAHAY | `E0:72:A1:D4:E3:88` |
+| 8 | LABOR | `E0:72:A1:D5:80:44` |
+| 9 | LOMO | `E0:72:A1:DA:0F:A4` |
+| 10 | MACASERO | `E0:72:A1:D6:B3:4C` |
+| 11 | MARTIN | `68:09:47:59:87:94` |
+| 12 | PANSOY | `20:50:0D:E6:FC:34` |
+| 13 | QUITORIANO | `3C:0F:02:D3:F1:8C` |
+| 14 | REDELOSA | `4C:C3:82:E6:1A:E8` |
+| 15 | REUYAN | `30:76:F5:F7:5B:D8` |
+| 16 | TAER | `E0:72:A1:D4:EE:60` |
+| 17 | TAER | `3C:0F:02:D3:ED:E0` |
+
+## Evidence Files
+### Serial Monitor screenshot
+https://drive.google.com/file/d/12J2KLlAVSDpjPxH-qYSpp95rnYHAd0JU/view?usp=sharing
+
+### 30-second Serial Monitor video
+https://drive.google.com/file/d/1k5jpHxmo4Aj6d8hI2yyQHKyxVpJrBwHs/view?usp=sharing
