@@ -3,7 +3,7 @@
 
 ### Student Information
 - **Name:** Ulrike Vaughn C. Cobrado
-- **GitHub Folder Name:** `cobrado_ulrike`
+- **GitHub Folder Name:** `COBRADO_ULRIKE`
 - **Board MAC Address:** `74:4D:BD:77:38:D0`
 
 ### Network Results
