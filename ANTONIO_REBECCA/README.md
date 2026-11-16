@@ -1,9 +1,9 @@
 <div align="center">
 
-# Laboratory 10  
+# Laboratory 10
 ## ESP-NOW Block 2 Network
 
-**Student:** Antonio_Rebecca
+**Student:** Antonio_Rebecca  
 **Board MAC Address:** `20:50:0D:5A:28:6C`  
 **Number of Boards Heard:** 17  
 **Block Window:** November 16, 2026 | 4:07pm
