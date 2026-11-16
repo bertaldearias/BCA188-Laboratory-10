@@ -1,30 +1,46 @@
-
 #include <WiFi.h>
 #include <esp_now.h>
 #include <esp_wifi.h>
 #include <string.h>
+#include <ctype.h>
 
 // BCA188 - Laboratory Activity 10
-// ESP-NOW Block Network
+// ESP-NOW Block 2 Network (B186.1)
 
 #define CHANNEL 1
 #define MAX_BOARDS 100
+#define NAME_LENGTH 32
+
+// CHANGE THIS FOR EACH STUDENT
+#define STUDENT_LASTNAME "LASTNAME"
 
 uint8_t broadcastAddress[] = {
   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
 };
 
-const char message[] = "BCA188-LAB10";
+const char networkID[] = "B186.1-BLOCK2";
+
+struct Message {
+  char network[16];
+  char lastname[NAME_LENGTH];
+};
+
+struct Board {
+  uint8_t mac[6];
+  char lastname[NAME_LENGTH];
+};
+
+Message outgoingMessage;
+Board heardBoards[MAX_BOARDS];
 
 uint8_t myMAC[6];
-uint8_t heardMACs[MAX_BOARDS][6];
+int boardCount = 0;
 
-volatile int boardCount = 0;
+portMUX_TYPE boardMux = portMUX_INITIALIZER_UNLOCKED;
 
 unsigned long lastSend = 0;
 unsigned long lastDisplay = 0;
 
-// Print MAC address
 void printMAC(const uint8_t *mac) {
   for (int i = 0; i < 6; i++) {
     if (i > 0) Serial.print(":");
@@ -33,45 +49,105 @@ void printMAC(const uint8_t *mac) {
   }
 }
 
-// Receive messages from other boards
+int compareNames(const char *a, const char *b) {
+  while (*a && *b) {
+    int ca = tolower((unsigned char)*a);
+    int cb = tolower((unsigned char)*b);
+
+    if (ca != cb) return ca - cb;
+
+    a++;
+    b++;
+  }
+
+  return (unsigned char)*a - (unsigned char)*b;
+}
+
 void onReceive(
   const esp_now_recv_info_t *info,
   const uint8_t *data,
   int len
 ) {
   if (info == nullptr || data == nullptr) return;
+  if (len != sizeof(Message)) return;
 
-  // Accept messages from the same block sketch
-  if (len != sizeof(message)) return;
-  if (memcmp(data, message, sizeof(message)) != 0) return;
+  Message received;
+  memcpy(&received, data, sizeof(received));
+
+  received.network[sizeof(received.network) - 1] = '\0';
+  received.lastname[NAME_LENGTH - 1] = '\0';
+
+  if (strcmp(received.network, networkID) != 0) return;
+  if (received.lastname[0] == '\0') return;
 
   const uint8_t *mac = info->src_addr;
 
-  // Ignore own MAC
   if (memcmp(mac, myMAC, 6) == 0) return;
 
-  // Avoid counting duplicates
+  portENTER_CRITICAL(&boardMux);
+
+  int index = -1;
+
   for (int i = 0; i < boardCount; i++) {
-    if (memcmp(heardMACs[i], mac, 6) == 0) {
-      return;
+    if (memcmp(heardBoards[i].mac, mac, 6) == 0) {
+      index = i;
+      break;
     }
   }
 
-  // Save new MAC address
-  if (boardCount < MAX_BOARDS) {
-    memcpy(heardMACs[boardCount], mac, 6);
-    boardCount++;
+  if (index == -1 && boardCount < MAX_BOARDS) {
+    index = boardCount++;
+    memcpy(heardBoards[index].mac, mac, 6);
   }
+
+  if (index != -1) {
+    memcpy(
+      heardBoards[index].lastname,
+      received.lastname,
+      NAME_LENGTH
+    );
+  }
+
+  portEXIT_CRITICAL(&boardMux);
 }
 
-// Display results
 void showResults() {
-  int total = boardCount;
+  Board sortedBoards[MAX_BOARDS];
+  int total;
+
+  portENTER_CRITICAL(&boardMux);
+
+  total = boardCount;
+  memcpy(sortedBoards, heardBoards, total * sizeof(Board));
+
+  portEXIT_CRITICAL(&boardMux);
+
+  // Alphabetical sorting (A-Z)
+  for (int i = 1; i < total; i++) {
+    Board current = sortedBoards[i];
+    int j = i - 1;
+
+    while (
+      j >= 0 &&
+      compareNames(
+        sortedBoards[j].lastname,
+        current.lastname
+      ) > 0
+    ) {
+      sortedBoards[j + 1] = sortedBoards[j];
+      j--;
+    }
+
+    sortedBoards[j + 1] = current;
+  }
 
   Serial.println();
   Serial.println("================================");
-  Serial.println("    ESP-NOW BLOCK NETWORK");
+  Serial.println(" ESP-NOW BLOCK 2 NETWORK (B186.1)");
   Serial.println("================================");
+
+  Serial.print("Name: ");
+  Serial.println(STUDENT_LASTNAME);
 
   Serial.print("My Board MAC: ");
   printMAC(myMAC);
@@ -89,7 +165,9 @@ void showResults() {
   for (int i = 0; i < total; i++) {
     Serial.print(i + 1);
     Serial.print(". ");
-    printMAC(heardMACs[i]);
+    Serial.print(sortedBoards[i].lastname);
+    Serial.print(" - ");
+    printMAC(sortedBoards[i].mac);
     Serial.println();
   }
 
@@ -103,27 +181,25 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
 
-  // Set ESP-NOW channel
-  if (esp_wifi_set_channel(
-    CHANNEL,
-    WIFI_SECOND_CHAN_NONE
-  ) != ESP_OK) {
+  if (
+    esp_wifi_set_channel(
+      CHANNEL,
+      WIFI_SECOND_CHAN_NONE
+    ) != ESP_OK
+  ) {
     Serial.println("Channel setup failed!");
     return;
   }
 
   esp_wifi_get_mac(WIFI_IF_STA, myMAC);
 
-  // Initialize ESP-NOW
   if (esp_now_init() != ESP_OK) {
     Serial.println("ESP-NOW initialization failed!");
     return;
   }
 
-  // Receive callback
   esp_now_register_recv_cb(onReceive);
 
-  // Add broadcast peer
   esp_now_peer_info_t peerInfo = {};
 
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
@@ -136,6 +212,20 @@ void setup() {
     return;
   }
 
+  memset(&outgoingMessage, 0, sizeof(outgoingMessage));
+
+  strncpy(
+    outgoingMessage.network,
+    networkID,
+    sizeof(outgoingMessage.network) - 1
+  );
+
+  strncpy(
+    outgoingMessage.lastname,
+    STUDENT_LASTNAME,
+    NAME_LENGTH - 1
+  );
+
   Serial.println("ESP-NOW Ready!");
   showResults();
 }
@@ -143,18 +233,16 @@ void setup() {
 void loop() {
   unsigned long now = millis();
 
-  // Broadcast every 2 seconds
   if (now - lastSend >= 2000) {
     lastSend = now;
 
     esp_now_send(
       broadcastAddress,
-      (const uint8_t *)message,
-      sizeof(message)
+      (const uint8_t *)&outgoingMessage,
+      sizeof(outgoingMessage)
     );
   }
 
-  // Display results every 5 seconds
   if (now - lastDisplay >= 5000) {
     lastDisplay = now;
     showResults();
